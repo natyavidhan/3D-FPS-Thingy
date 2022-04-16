@@ -58,8 +58,8 @@ def update():
         camera.fov += 1
     if held_keys['r']:
         camera.fov -= 1
-    if playerController.y < 0:
-        playerController.y = 35
+    if playerController.y < 10:
+        playerController.y = 10.5
     if playerController.x > 49:
         playerController.x = 49
     if playerController.x < -49:
@@ -81,11 +81,11 @@ def update():
     for addr in allPlayers:
         if addr != user[2]:
             player = allPlayers[addr]
-            pos = Vec3(player[0][0], player[0][1], player[0][2])
+            pos = Vec3(player[0][0], player[0][1]+0.75, player[0][2])
             rot = Vec3(player[1][0], player[1][1], player[1][2])
 
             if addr not in players:
-                players[addr] = Entity(model="cube", color = color.red, scale=(1, 1, 1), collider="box", position=pos, rotation=rot)
+                players[addr] = Entity(model="cube", color = color.red, scale=(0.5, 1.5, 0.5), collider="box", position=pos, rotation=rot)
             else:
                 players[addr].position = pos
                 players[addr].rotation = rot
