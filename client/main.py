@@ -60,6 +60,14 @@ def update():
         camera.fov -= 1
     if playerController.y < 0:
         playerController.y = 35
+    if playerController.x > 49:
+        playerController.x = 49
+    if playerController.x < -49:
+        playerController.x = -49
+    if playerController.z > 49:
+        playerController.z = 49
+    if playerController.z < -49:
+        playerController.z = -49
     
     playerData = [[], []]
     for i in range(3):
