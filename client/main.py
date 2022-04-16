@@ -61,22 +61,20 @@ def update():
     if playerController.y < 0:
         playerController.y = 35
     
-    pos = []
-    rot = []
+    playerData = [[], []]
     for i in range(3):
-        pos.append(round(list(playerController.position)[i], 4))
-        rot.append(round(list(playerController.rotation)[i], 4))
+        playerData[0].append(round(list(playerController.position)[i], 4))
+        playerData[1].append(round(list(playerController.rotation)[i], 4))
 
-    player = {"pos": pos, "rot": rot}
-    net.send("update||" + json.dumps(player))
+    net.send("update||" + json.dumps(playerData))
 
     allPlayers = json.loads(net.send("get||all"))
     user = json.loads(net.send("get||self"))
     for addr in allPlayers:
-        if addr != user["id"]:
+        if addr != user[2]:
             player = allPlayers[addr]
-            pos = Vec3(player["pos"][0], player["pos"][1], player["pos"][2])
-            rot = Vec3(player["rot"][0], player["rot"][1], player["rot"][2])
+            pos = Vec3(player[0][0], player[0][1], player[0][2])
+            rot = Vec3(player[1][0], player[1][1], player[1][2])
 
             if addr not in players:
                 players[addr] = Entity(model="cube", color = color.red, scale=(1, 1, 1), collider="box", position=pos, rotation=rot)

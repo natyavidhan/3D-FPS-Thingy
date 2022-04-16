@@ -24,7 +24,8 @@ mapSize = [100, 100]
 
 def threaded_client(conn, addr):
     global players
-    players[str(addr)] = {"id": str(addr), "pos": [0, 10, 0], "rot": [0, 0, 0]}
+    # players[str(addr)] = {"id": str(addr), "pos": [0, 10, 0], "rot": [0, 0, 0]}
+    players[str(addr)] = [[0, 0, 0], [0, 0, 0], str(addr)]
     while True:
         try:
             data = conn.recv(2048)
@@ -40,7 +41,7 @@ def threaded_client(conn, addr):
                     conn.send(str.encode(json.dumps(players[str(addr)])))
             elif message == "update":
                 player = json.loads(command)
-                player["id"] = str(addr)
+                player.append(str(addr))
                 players[str(addr)] = player
                 conn.send(str.encode("updated"))
 
